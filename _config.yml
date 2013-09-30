@@ -2,3 +2,4 @@ name: Your New Jekyll Site
 markdown: redcarpet
 pygments: true
 exclude: ['Rakefile', 'config.rb', '.gitignore', '.sass-cache', 'sass']
+permalink: /:year/:month/:day/:title/
