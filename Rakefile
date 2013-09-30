@@ -23,6 +23,7 @@ task :publish => [:generate] do
     # system "git branch -D master"
     system "git checkout master"
     system "rm -rf *"
+    system "rm -rf .sass-cache"
     system "mv #{tmp}/* ."
     message = "Site updated at #{Time.now.utc}"
     system "git add ."
