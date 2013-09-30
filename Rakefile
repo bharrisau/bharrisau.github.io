@@ -17,13 +17,13 @@ end
 
 desc "Generate and publish blog to gh-pages"
 task :publish => [:generate] do
+  system "compass compile"
   Dir.mktmpdir do |tmp|
     system "mv _site/* #{tmp}"
     system "git stash"
     # system "git branch -D master"
     system "git checkout master"
     system "rm -rf *"
-    system "rm -rf .sass-cache"
     system "mv #{tmp}/* ."
     message = "Site updated at #{Time.now.utc}"
     system "git add ."
