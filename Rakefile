@@ -38,7 +38,7 @@ end
 desc "compile and run the site"
 task :serve do
   pids = [
-    spawn("jekyll serve"), # put `auto: true` in your _config.yml
+    spawn("jekyll serve --watch"), # put `auto: true` in your _config.yml
     spawn("compass watch")
     # spawn("coffee -b -w -o javascripts -c assets/*.coffee")
   ]
