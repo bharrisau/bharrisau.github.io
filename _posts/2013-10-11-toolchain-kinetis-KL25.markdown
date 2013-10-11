@@ -4,7 +4,7 @@ title:  "Toolchain: Kinetis KL25 development"
 categories: toolchain development kl25 kinetis
 ---
 
-I've recently selected the Kinetis KL25 as my go-to microcontroller. I can buy it cheaply direct from Freescale, and it has an incredible collection of periphials for the cost. This necessitaed the search for a new toolchain. I have a bad habit of reinventing the wheel with most things, so I started looking for projects with periphial libraries. After a relatively short search, I had found three potentials.
+I've recently selected the Kinetis KL25 as my go-to microcontroller. I can buy it cheaply direct from Freescale, and it has an incredible collection of peripherals for the cost. This necessitated the search for a new toolchain. I have a bad habit of reinventing the wheel with most things, so I started looking for projects with peripheral libraries. After a relatively short search, I had found three potentials.
 
 <!--excerpt-->
 
@@ -16,7 +16,7 @@ I've recently selected the Kinetis KL25 as my go-to microcontroller. I can buy i
 [NuttX][nuttx] is the choice I'm trying first up. It has the least pretty homepage of the three, but the feature list is strong, and it has a large number of periphial libraries. Most importantly, it has a porting guide.
 
 #### Contiki
-[Contiki][contiki] has always been a platform that I've wanted to use. It is event driven with protothreads, which is how I would like to write my programs. In the end I didn't choose it because working out how to port it was more effort than NuttX and the library of periphials looked to be focused for wireless sensor projects.
+[Contiki][contiki] has always been a platform that I've wanted to use. It is event driven with protothreads, which is how I would like to write my programs. In the end I didn't choose it because working out how to port it was more effort than NuttX and the library of peripherals looked to be focused for wireless sensor projects.
 
 Clearly this was just from a quick review, I'm probably wrong on a number of points and I might have to come back and try a different project if NuttX doesn't work out.
 
@@ -58,7 +58,7 @@ I need to confirm that the build files are correct. From first inspection, the v
 My target board should be arriving soon, so I'll have something to test with.
 
 ### P.S. building a custom mbed library
-For anyone loking how to modify mbed for a smaller KL25 version, this is what I did.
+For anyone looking how to modify mbed for a smaller KL25 version, this is what I did.
 
 Update MKL25Z4.ld for 64kB flash/8kB RAM. 1/4 of the RAM is before 0x20000000, and mbed wants me to not use the first 0xC0 of it.
 
