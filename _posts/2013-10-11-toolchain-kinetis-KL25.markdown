@@ -13,7 +13,7 @@ I've recently selected the Kinetis KL25 as my go-to microcontroller. I can buy i
 [mbed][mbed] looks to have the biggest ecosystem of the three, and the standard library is designed to make everything very easy. It has a target for the 128kB version of the KL25, which was easy to modify for the 64kB version I'm using (see below). In the end I felt mbed was a bit too heavy, I might come back to it if the other alternatives don't pan out.
 
 #### NuttX
-[NuttX][nuttx] is the choice I'm trying first up. It has the least pretty homepage of the three, but the feature list is strong, and it has a large number of periphial libraries. Most importantly, it has a porting guide.
+[NuttX][nuttx] is the choice I'm trying first up. It has the least pretty homepage of the three, but the feature list is strong, and it has a large number of peripheral libraries. Most importantly, it has a porting guide.
 
 #### Contiki
 [Contiki][contiki] has always been a platform that I've wanted to use. It is event driven with protothreads, which is how I would like to write my programs. In the end I didn't choose it because working out how to port it was more effort than NuttX and the library of peripherals looked to be focused for wireless sensor projects.
