@@ -2,9 +2,10 @@
 layout: post
 title:  "Magnetic delta and print angles"
 categories: printer delta math
+description: "Calculating range of motion of a 3D printer magnetic joint"
 ---
 
-I'm in the middle of designing my delta style 3D printer. Having reviewed a few designs, the magnetic joints looks to be the easiest way to go. I've noticed that many people angle the ball mount 45 degrees be either [bending the plate][berrybot-hotend] or [inserting an angle spacer][xnaron-rostock]. I wanted to avoid this is possible, so I calculated the minimum inclination possible for a given design.
+I'm in the middle of designing my delta style 3D printer. Having reviewed a few designs, the magnetic joints looks to be the easiest way to go. I've noticed that many people angle the ball mount 45 degrees by either [bending the plate][berrybot-hotend] or [inserting an angle spacer][xnaron-rostock]. I wanted to avoid this if possible, so I calculated the minimum inclination possible for a given design.
 
 <!--excerpt-->
 

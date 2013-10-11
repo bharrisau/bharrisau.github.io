@@ -5,3 +5,5 @@ exclude: ['Rakefile', 'config.rb', '.gitignore', '.sass-cache', 'sass']
 permalink: /:year/:month/:day/:title/
 ga: UA-30655099-1
 excerpt_separator: <!--excerpt-->
+description: Life and work
+keywords: ['technology', 'mathematics', 'science', 'electronics', 'programming']
