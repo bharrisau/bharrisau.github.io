@@ -1,8 +1,7 @@
 ---
 layout: post
-title:  "Welcome to Jekyll!"
-date:   2013-09-30 08:19:52
-categories: jekyll update
+title:  "gEDA and Kicad"
+categories: geda kicad eda pcb review
 ---
 
 You'll find this post in your `_posts` directory - edit this post and re-build (or run with the `-w` switch) to see your changes!
@@ -20,7 +19,17 @@ print_hi('Tom')
 #=> prints 'Hi, Tom' to STDOUT.
 {% endhighlight %}
 
+{% highlight coffeescript %}
+a = (b, v) ->
+  b = v a
+{% endhighlight %}
+
 Check out the [Jekyll docs][jekyll] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll's GitHub repo][jekyll-gh].
 
-[jekyll-gh]: https://github.com/mojombo/jekyll
-[jekyll]:    http://jekyllrb.com
+[kicad]:    http://www.kicad-pcb.org
+[geda]:     http://www.geda-project.org
+[operon]:   https://github.com/bharrisau/operon
+[edalm]:    https://github.com/bharrisau/edalm
+
+
+
