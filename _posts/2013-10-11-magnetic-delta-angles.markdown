@@ -9,9 +9,9 @@ I'm in the middle of designing my delta style 3D printer. Having reviewed a few 
 
 <!--excerpt-->
 
-The math was pretty simple. I use the [cosine law][cosine-law] to calculate the angle occupied by a given chord. There are two chords of import; the diameter of the mount for the ball, and the diameter of the joint. In Xnaron's project above; we have a 3/8" ball, the mount is a 6mm screw, and the joint is 3/8". This gives the join occupying 180&deg; and the mount 78&deg;, when we are at max range, these two angles are adjacent.
+The math was pretty simple. I use the [cosine law][cosine-law] to calculate the angle occupied by a given chord. There are two chords of importance; the diameter of the mount for the ball, and the diameter of the joint. In Xnaron's project above; we have a 3/8" ball, the mount is a 6mm screw, and the joint is 3/8". This gives the joint occupying 180&deg; and the mount 78&deg;, when we are at max range, these two angles are adjacent.
 
-If we start with the mount, it is vertical giving -90&deg; inclination. We add half of the angle to get -51&deg; inclination, then half of the join angle to get 39&deg;. This means the minimum inclination possible before the join runs out of range is 39&deg;. If he were using a 1/2" ball it would extend to -13&deg;, well below horizontal.
+If we start with the mount, it is vertical giving -90&deg; inclination. We add half of the angle to get -51&deg; inclination, then half of the joint angle to get 39&deg;. This means the minimum inclination possible before the joint runs out of range is 39&deg;. If he were using a 1/2" ball it would extend to -13&deg;, well below horizontal.
 
 I'll probably end up using 1/2" balls in my design, 1/4" dimple press for the mount, and then experiment with the joint design to give just enough hold.
 
