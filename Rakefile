@@ -36,8 +36,6 @@ end
 
 desc "Generate and publish blog to gh-pages"
 task :publish => [:commit] do
-  puts "\n## Staging _site directory"
-  status = system("git add -A _site")
   puts "\n## Deleting master branch"
   status = system("git branch -D master")
   puts status ? "Success" : "Failed"
