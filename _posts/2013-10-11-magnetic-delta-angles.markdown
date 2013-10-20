@@ -9,15 +9,15 @@ I'm in the middle of designing my delta style 3D printer. Having reviewed a few 
 
 <!--excerpt-->
 
-The math was pretty simple. I use the [cosine law][cosine-law] to calculate the angle occupied by a given chord. There are two chords of importance; the diameter of the mount for the ball, and the diameter of the joint. In Xnaron's project above; we have a 3/8" ball, the mount is a 6mm screw, and the joint is 3/8". This gives the joint occupying 180&deg; and the mount 78&deg;, when we are at max range, these two angles are adjacent.
+The math was pretty simple. I use the [cosine law][cosine-law] to calculate the angle occupied by a given chord. There are two chords of importance; the diameter of the mount for the ball, and the diameter of the joint. In Xnaron's project above; we have a 3/8" ball (\\(a\\)), the joint is 3/8" (\\(b\\)), and the mount is a 6mm screw (\\(c\\)). This gives the joint occupying 180&deg; (\\(\\alpha\\)) and the mount 78&deg; (\\(\\beta\\)), when we are at max range, these two angles are adjacent.
+$$\\alpha = \\arccos(1 - {2b^2 \\over a^2})$$
+$$\\beta = \\arccos(1 - {2c^2 \\over a^2})$$
 
-If we start with the mount, it is vertical giving -90&deg; inclination. We add half of the angle to get -51&deg; inclination, then half of the joint angle to get 39&deg;. This means the minimum inclination possible before the joint runs out of range is 39&deg;. If he were using a 1/2" ball it would extend to -13&deg;, well below horizontal.
+We are looking for the minimum inclination (\\(\\gamma\\)). If we start with the mount, it is vertical giving -90&deg; inclination. We add half of the angle to get -51&deg; inclination, then half of the joint angle to get 39&deg;. This means the minimum inclination possible before the joint runs out of range is 39&deg;. If he were using a 1/2" ball it would extend to -13&deg;, well below horizontal.
+$$\\gamma = {\\alpha \\over 2} + {\\beta \\over 2} - 90&deg;$$
 
-I'll probably end up using 1/2" balls in my design, 1/4" dimple press for the mount, and then experiment with the joint design to give just enough hold.
+To calculate the minimum inclination  I'll probably end up using 1/2" balls in my design, 1/4" dimple press for the mount, and then experiment with the joint design to give just enough hold. With a 3/8" joint this will give -11&deg;, or well below horizontal.
 
 [berrybot-hotend]: http://www.youtube.com/watch?v=WriyoSTJ51s
 [xnaron-rostock]:  http://forum.seemecnc.com/viewtopic.php?f=54&t=1704&sid=512048173d7806425ee0b8a411e75957
 [cosine-law]:      http://en.wikipedia.org/wiki/Law_of_cosines
-
-
-
