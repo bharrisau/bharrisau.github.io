@@ -11,7 +11,9 @@ require 'jekyll'
 
 desc "Generate blog files"
 task :generate do
-  system "compass compile"
+  puts "\n## Generating production site"
+  system "touch -m sass/app.scss"
+  system "compass compile -e production"
   Jekyll::Site.new(Jekyll.configuration({
     "source"      => ".",
     "destination" => "_site"
@@ -53,9 +55,10 @@ end
 
 desc "compile and run the site"
 task :serve do
+  system "touch -m sass/app.scss"
   pids = [
     spawn("jekyll serve --watch --drafts"), # put `auto: true` in your _config.yml
-    spawn("compass watch")
+    spawn("compass watch -e development")
     # spawn("coffee -b -w -o javascripts -c assets/*.coffee")
   ]
    
