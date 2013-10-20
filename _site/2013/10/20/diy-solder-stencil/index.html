@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>DIY solder stencils in Kicad &lt;&lt; bharr</title>
+    
+    <meta name="description" content="Life and work" />
+    
+    
+    <meta name="keywords" content="pcb,solder,assembly,reflow,kicad" />
+    
+    
+    <meta http-equiv="date" content="Sunday, 20  2013 11:54:30 GMT" />
+    
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/app.css">
+
+    <script src="/js/vendor/custom.modernizr.js"></script>
+
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+
+  </head>
+  <body>
+
+  <!-- Nav Bar -->
+
+    <div class="row">
+      <div class="large-12 columns">
+        <div class="nav-bar right">
+         <!-- <ul class="button-group">
+           <li><a href="#" class="button">Link 1</a></li>
+           <li><a href="#" class="button">Link 2</a></li>
+           <li><a href="#" class="button">Link 3</a></li>
+           <li><a href="#" class="button">Link 4</a></li>
+          </ul> -->
+        </div>
+        <h1><a href="/">bharr</a> <small>Too new for a tagline.</small></h1>
+        <hr />
+      </div>
+    </div>
+
+    <!-- End Nav -->
+
+
+    <!-- Main Page Content and Sidebar -->
+
+    <div class="row">
+
+      <!-- Main Blog Content -->
+      <div class="large-9 columns" role="content">
+
+        <h2>DIY solder stencils in Kicad</h2>
+<p class="meta">20 Oct 2013</p>
+
+<div class="post">
+<p>I saw this <a href="http://lowpowerlab.com/blog/2013/02/11/diy-smd-metal-stencils-the-definitive-tutorial/">great guide</a> on making your own aluminium solder stencils from soda cans a few months ago and decided to give it a go for my <a href="http://operon.bharr.is">operon</a> board. I won&#39;t rehash all of the steps, Felix has done a great job of that. I&#39;ll just cover the stuff I learnt while giving it a go.</p>
+
+<!--excerpt-->
+
+<h3>Toner transfer</h3>
+
+<p>Finding a reliable medium for toner transfer was a little difficult. Felix suggests transparency film or shelving vinyl. After trying a few different things I ended up using book contact from Woolworths (I think it is very similar to the shelving vinyl).</p>
+
+<p>I also tried using laminator sleeves and magazine paper. Neither really worked.</p>
+
+<p>I used the contact to cover most of an A4 sheet of paper, and fed that through the printer. Unfortunately, when the contact is heated, it shrinks, curling the paper and also shrinking the stencil size. In the future I am going to try using a smaller amount of the contact, and preshrinking it a couple of times.</p>
+
+<h3>Design preparation</h3>
+
+<p>I use Kicad for all my designs, so these are the steps I used to produce the stencil design.</p>
+
+<h4>Shrink the solder mask</h4>
+
+<p>The Low Power Labs article suggests shrinking the paste apertures, I used -10% but I might experiment with different values in the future. To change the global shrinkage go to &#39;Dimensions&#39; -&gt; &#39;Pads Mask Clearance&#39; and set either &#39;Solder Paste Clearance&#39; or &#39;Solder Paste Ratio Clearance&#39;.</p>
+
+<p>I used my tool <a href="https://github.com/bharrisau/edalm">edalm</a> to produce all my footprints, and it splits large thermal pads into smaller ones by default. The standard shrinkage on these pads is -12.5%, but when I etched the design it became a single large pad. In the future I will be setting the thermal pad shrinkage to -25%.</p>
+
+<h4>Correct paste layer</h4>
+
+<p>You may need to go through and disable the paste layer on some pads; such as through hole components you will be soldering manually. To do this select the &#39;Edit&#39; option for the pad and untick the F.Paste layer.</p>
+
+<h4>Create the SVG</h4>
+
+<p>I created the SVG by plotting to gerber and using gerbv to modify and export as SVG. My modifications were just the addition of <a href="http://www.hoektronics.com/2012/10/27/super-simple-smt-stencil8/">stencil8</a> peg holes based on using my <a href="https://github.com/bharrisau/spacer_board">stencil guides</a>. I&#39;ll be uploading the overlays once I&#39;ve confirmed they all work.</p>
+
+<h4>Create the PDF</h4>
+
+<p>I use Inkscape to convert the SVG to a PDF. The steps are simple:</p>
+
+<ol>
+<li>Draw black box covering the design (as we need the stencil to be a negative)</li>
+<li>Send the box to the bottom: Object -&gt; Lower to Bottom</li>
+<li>Ungroup the stencil object: Object -&gt; Ungroup</li>
+<li>Convert the stencil to a single path: Path -&gt; Union</li>
+<li>Shift select the box so everything is selected, then: Path -&gt; Difference</li>
+<li>Flip the final object horizontally (this way the silver side is up)</li>
+<li>File -&gt; Save a copy. Save as PDF</li>
+</ol>
+
+<h3>Preparing the aluminium</h3>
+
+<p>I had a hard time removing the inner coating on the can with just a paper towel and acetone. I moved up to using a green pot scrubber, but that left the aluminium with scratches. I&#39;ll have to try different cans and see if I can improve.</p>
+
+<h3>Results</h3>
+
+<p>The rest of my process was the same as the Low Power Labs article. The stencil wasn&#39;t usable because of the shrinkage and the over etching of the thermal pads.</p>
+
+</div>
+
+
+      </div>
+
+      <!-- End Main Content -->
+
+
+      <!-- Sidebar -->
+
+      <!-- <aside class="large-3 columns">
+
+        <h5>Categories</h5>
+        <ul class="side-nav">
+          <li><a href="#">News</a></li>
+          <li><a href="#">Code</a></li>
+          <li><a href="#">Design</a></li>
+          <li><a href="#">Fun</a></li>
+          <li><a href="#">Weasels</a></li>
+        </ul>
+
+        <div class="panel">
+          <h5>Featured</h5>
+          <p>Pork drumstick turkey fugiat. Tri-tip elit turducken pork chop in. Swine short ribs meatball irure bacon nulla pork belly cupidatat meatloaf cow.</p>
+          <a href="#">Read More &rarr;</a>
+        </div>
+
+      </aside> -->
+
+      <!-- End Sidebar -->
+    </div>
+
+    <!-- End Main Content and Sidebar -->
+
+
+    <!-- Footer -->
+
+    <footer class="row">
+      <div class="large-12 columns">
+        <hr />
+        <div class="row">
+          <div class="large-12 columns">
+            <p>Unless stated otherwise; all works are &copy; Copyright Ben Harris and licenced under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License</a>.</p>
+          </div>
+          <!-- <div class="large-6 columns">
+            <ul class="inline-list right">
+              <li><a href="#">Link 1</a></li>
+              <li><a href="#">Link 2</a></li>
+              <li><a href="#">Link 3</a></li>
+              <li><a href="#">Link 4</a></li>
+            </ul>
+          </div> -->
+        </div>
+      </div>
+    </footer>
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-30655099-1']);
+      _gaq.push(['_setDomainName', 'bharr.is']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <script>
+      document.write('<script src='
+        + ('__proto__' in {} ? '/js/vendor/zepto' :
+          '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min')
+        + '.js><\/script>');
+    </script>
+
+    <script src="/js/foundation/foundation.js"></script>
+    <script src="/js/foundation/foundation.clearing.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+    <script type="text/javascript"
+      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+  </body>
+</html>
+
