@@ -11,6 +11,7 @@ require 'jekyll'
 
 desc "Generate blog files"
 task :generate do
+  system "compass compile"
   Jekyll::Site.new(Jekyll.configuration({
     "source"      => ".",
     "destination" => "_site"
@@ -33,7 +34,6 @@ end
 
 desc "Generate and publish blog to gh-pages"
 task :publish => [:commit] do
-  system "compass compile"
   puts "\n## Deleting master branch"
   status = system("git branch -D master")
   puts status ? "Success" : "Failed"
