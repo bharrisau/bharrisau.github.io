@@ -2,7 +2,7 @@
 layout: post
 title:  "Mnemonic project: Day 2"
 categories: cards memory mnemonic loci
-description: "Personal log of my progress learning a mnemonic system. Day 2."
+description: "Personal log of my progress learning a mnemonic system: day 2."
 ---
 
 I'm practising the skill of memorising a deck of cards. Hopefully by logging my progress I'll keep at it long enough to make it a habit.

@@ -2,6 +2,7 @@
 layout: post
 title:  "DIY solder stencils in Kicad"
 categories: pcb solder assembly reflow kicad
+description: ""
 ---
 
 I saw this [great guide][low power stencils] on making your own aluminium solder stencils from soda cans a few months ago and decided to give it a go for my [operon][operon] board. I won't rehash all of the steps, Felix has done a great job of that. I'll just cover the stuff I learnt while giving it a go.
