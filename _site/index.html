@@ -55,6 +55,18 @@
         
   <article>
 
+    <h3><a href="/2013/10/23/usb-vid-pid-solution/">USB PID/VID: A mitigating solution</a></h3>
+    <h6>Written by Ben Harris on 23 Oct 2013.</h6>
+
+    <p>There has been <a href="http://www.arachnidlabs.com/blog/2013/10/18/usb-if-no-vid-for-open-source/">recent</a> <a href="http://hackaday.com/2013/10/22/usb-implementers-forum-says-no-to-open-source/">coverage</a> of the difficulty small projects have in getting a PID/VID for their USB devices. Even if they are implementing devices that only use class interfaces (and don&#39;t need a driver), the device still needs a VID/PID to enumerate with. One solution is to try and get USB-IF to sell smaller blocks of numbers, but they are hesitant to do that because the VID/PID isn&#39;t a 32-bit address space they can apportion how they want (this is a political, not technical distinction).</p>
+
+<p>Another solution is to get one VID/PID that all these simple projects can use, and specify a minimal protocol that they need to implement to be compatible with a generic driver. I&#39;ll take the first stab at this, hopefully it gets some traction.</p>
+
+
+  </article>
+
+  <article>
+
     <h3><a href="/2013/10/22/mnemonic-project-day-4/">Mnemonic project: Day 4</a></h3>
     <h6>Written by Ben Harris on 22 Oct 2013.</h6>
 

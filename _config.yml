@@ -7,3 +7,6 @@ ga: UA-30655099-1
 excerpt_separator: <!--excerpt-->
 description: Life and work
 keywords: ['technology', 'mathematics', 'science', 'electronics', 'programming']
+
+redcarpet:
+  extensions: ['tables']
