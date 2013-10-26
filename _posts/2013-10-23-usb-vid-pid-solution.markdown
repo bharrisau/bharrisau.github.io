@@ -13,7 +13,7 @@ Another solution is to get one VID/PID that all these simple projects can use, a
 
 I previously had some stuff written up here, but it was brought to my attention that DFU and CDC-ACM are sufficiently lightweight and tools already exist for them. So here is the drastically simplified proposal.
 
-#### Devices with host<->device communication
+#### OSHW serial device
 The VID/PID pair of 0x????/0x???? is available to support these devices. The device is expected to provide a CDC-ACM interface to emulate a serial port. The device MUST comply with the following to use this VID/PID pair:
 
 1. The device MUST implement CDC-ACM. There are no requirements on the capabilities provided by the interface (i.e. bmCapabilities may be any value allowed by the spec).
@@ -22,7 +22,7 @@ The VID/PID pair of 0x????/0x???? is available to support these devices. The dev
 4. The product description MUST include a URL to a project page for the device. The project page MUST provide documentation of the protocol implemented on the serial port.
 5. The device MAY provide a DFU interface that complies with the DFU specification.
 
-#### Devices in DFU mode
+#### OSHW firmware mode
 The VID/PID pair of 0x????/0x???? is available to support these devices. The device MUST comply with the following to use this VID/PID pair:
 
 1. The device MUST implement the DFU specification.
@@ -32,8 +32,8 @@ The VID/PID pair of 0x????/0x???? is available to support these devices. The dev
 5. The DFU interface descriptor MUST provide a string descriptor. This descriptor MUST be available at least in language 0x0409 (English/US).
 6. The device MAY provide alternate settings for the DFU interface. If alternative settings are used, all interface string descriptors MUST be unique.
 
-#### Devices only providing a DFU interface
-The same VID/PID pair used for 'devices in DFU mode' may be used for these devices. The device is only permitted to provide a DFU interface. When in run mode, the device MUST comply with the following to use this VID/PID pair:
+#### Devices supporting DFU without CDC-ACM
+The same VID/PID pair used for 'OSHW firmware mode' may be used for these devices. The device is only permitted to provide a DFU interface. When in run mode, the device MUST comply with the following to use this VID/PID pair:
 
 1. The device MUST implement the DFU specification for run-mode with the exception that the device descriptor and configuration descriptor MUST be implemented from the DFU mode specification.
 2. The device descriptor MUST set bDeviceClass, bDeviceSubClass, bDeviceProtocol, and bcdDevice to be 0x00, 0x00, 0x00, and 0x0010, respectively.
