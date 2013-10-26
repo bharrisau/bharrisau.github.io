@@ -93,7 +93,7 @@
 
 <h4>Devices supporting DFU without CDC-ACM</h4>
 
-<p>The same VID/PID pair used for &#39;OSHW firmware mode&#39; may be used for these devices. The device is only permitted to provide a DFU interface. When in run mode, the device MUST comply with the following to use this VID/PID pair:</p>
+<p>The same VID/PID pair used for &#39;OSHW firmware mode&#39; may be used for these devices. The device should look identical to an &#39;OSHW firmware mode&#39; device except the interface descriptor should reflect the run-time mode. When in run mode, the device MUST comply with the following to use this VID/PID pair:</p>
 
 <ol>
 <li>The device MUST implement the DFU specification for run-mode with the exception that the device descriptor and configuration descriptor MUST be implemented from the DFU mode specification.</li>
