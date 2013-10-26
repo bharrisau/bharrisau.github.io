@@ -11,7 +11,7 @@ Another solution is to get one VID/PID that all these simple projects can use, a
 
 <!--excerpt-->
 
-I previously had some stuff written up here, but it was brought to my attention that DFU and CDC-ACM are sufficiently lightweight and tools already exist for them. So here is the drastically simplified proposal.
+I previously had some stuff written up here, but it was brought to my attention that DFU and CDC-ACM are sufficiently lightweight and tools already exist for them. So here is the drastically simplified proposal. Two VID/PID pairs are used to cover both a communication class device with a serial port, and a device in firmware update mode. I've picked generic names for these devices, 'OSHW serial device' and 'OSHW firmware mode', respectively. There is also information for devices that want to provide a firmware update method, but do not need a serial port.
 
 #### OSHW serial device
 The VID/PID pair of 0x????/0x???? is available to support these devices. The device is expected to provide a CDC-ACM interface to emulate a serial port. The device MUST comply with the following to use this VID/PID pair:
