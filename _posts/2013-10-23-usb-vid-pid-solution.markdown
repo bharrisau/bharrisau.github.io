@@ -18,7 +18,7 @@ The VID/PID pair of 0x????/0x???? is available to support these devices. The dev
 
 1. The device MUST implement CDC-ACM. There are no requirements on the capabilities provided by the interface (i.e. bmCapabilities may be any value allowed by the spec).
 2. The device descriptor MUST set bDeviceClass, bDeviceSubClass, bDeviceProtocol, and bcdDevice to be 0x02, 0x00, 0x00, and 0x0010, respectively.
-3. Device descriptor MUST specify manufacturer and product descriptions. The product description MUST be available at least in language 0x0409 (English/US).
+3. Device descriptor MUST specify manufacturer and product descriptions. The project description MUST be available at least in language 0x0409 (English/US).
 4. The product description MUST include a URL to a project page for the device. The product page MUST provide documentation of the protocol implemented on the serial port.
 5. The device MAY provide a DFU interface that complies with the DFU specification.
 
@@ -28,7 +28,7 @@ The VID/PID pair of 0x????/0x???? is available to support these devices. The dev
 1. The device MUST implement the DFU specification.
 2. The device descriptor MUST set bDeviceClass, bDeviceSubClass, bDeviceProtocol, and bcdDevice to be 0x00, 0x00, 0x00, and 0x0010, respectively.
 3. Device descriptor MUST specify manufacturer and product descriptions. The product description MUST be available at least in language 0x0409 (English/US).
-4. The product description MUST include a URL to a project page for the device. The product page MUST provide documentation of the format used for the firmware file.
+4. The product description MUST include a URL to a project page for the device. The project page MUST provide documentation of the format used for the firmware file.
 5. The DFU interface descriptor MUST provide a string descriptor. This descriptor MUST be available at least in language 0x0409 (English/US).
 6. The device MAY provide alternate settings for the DFU interface. If alternative settings are used, all interface string descriptors MUST be unique.
 
