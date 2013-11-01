@@ -7,6 +7,8 @@ description: "Selecting and installing a development environment for Freescale's
 
 I've recently selected the Kinetis KL25 as my go-to microcontroller. I can buy it cheaply direct from Freescale, and it has an incredible collection of peripherals for the cost. This necessitated the search for a new toolchain. I have a bad habit of reinventing the wheel with most things, so I started looking for projects with peripheral libraries. After a relatively short search, I had found three potentials.
 
+**Update: [Part 2]({% post_url 2013-11-01-toolchain-kinetis-KL25-part2 %}) of my search**
+
 <!--excerpt-->
 
 ### Alternatives
