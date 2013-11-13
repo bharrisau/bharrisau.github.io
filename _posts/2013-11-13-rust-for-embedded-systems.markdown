@@ -32,6 +32,8 @@ I've got a basic project working [here][rustup-operon]. Next step is to modify i
 ### Future work
 In the near future I want to fix up _start so it has its own section definition. I want to be able to define its location in flash and at the moment it is just generic .data. I'll also need to tackle the best way to handle the micro-controller registers, Rust doesn't have great support for 'volatile' yet and I'll need to import the C #defines into Rust macros.
 
+**Update:** Got section definitions working by adding -ffunction-sections to the llc options.
+
 [rust-lang]:      http://www.rust-lang.org/
 [rust-install]:   http://static.rust-lang.org/doc/master/tutorial.html#getting-started
 [rust-core]:      https://github.com/thestinger/rust-core

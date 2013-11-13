@@ -87,6 +87,8 @@ apt-get install llvm-3.4 clang-3.4
 
 <p>In the near future I want to fix up _start so it has its own section definition. I want to be able to define its location in flash and at the moment it is just generic .data. I&#39;ll also need to tackle the best way to handle the micro-controller registers, Rust doesn&#39;t have great support for &#39;volatile&#39; yet and I&#39;ll need to import the C #defines into Rust macros.</p>
 
+<p><strong>Update:</strong> Got section definitions working by adding -ffunction-sections to the llc options.</p>
+
 </div>
 
 <div id="disqus_thread"></div>
