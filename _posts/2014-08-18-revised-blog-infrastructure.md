@@ -8,3 +8,5 @@ I've just moved my blog from a manual build to a Travis build. This should hopef
 Stranger things have happend.
 
 Edit: Re-push as Travis didn't like the lack of config file in master.
+
+Edit2: Another try.
