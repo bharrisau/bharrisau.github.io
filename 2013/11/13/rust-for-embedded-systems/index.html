@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Rust for embedded systems &lt;&lt; bharr</title>
+    
+    <meta name="description" content="Steps to set up a Rust environment that builds binaries for ARM micro-controllers" />
+    
+    
+    <meta name="keywords" content="rust,toolchain,embedded,arm" />
+    
+    
+    <meta http-equiv="date" content="Wednesday, 13  2013 00:00:00 GMT" />
+    
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/app.css">
+
+    <script src="/js/vendor/custom.modernizr.js"></script>
+
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+
+  </head>
+  <body>
+
+  <!-- Nav Bar -->
+
+    <div class="row">
+      <div class="large-12 columns">
+        <div class="nav-bar right">
+         <!-- <ul class="button-group">
+           <li><a href="#" class="button">Link 1</a></li>
+           <li><a href="#" class="button">Link 2</a></li>
+           <li><a href="#" class="button">Link 3</a></li>
+           <li><a href="#" class="button">Link 4</a></li>
+          </ul> -->
+        </div>
+        <h1><a href="/">bharr</a> <small>Too new for a tagline.</small></h1>
+        <hr />
+      </div>
+    </div>
+
+    <!-- End Nav -->
+
+
+    <!-- Main Page Content and Sidebar -->
+
+    <div class="row">
+
+      <!-- Main Blog Content -->
+      <div class="large-9 columns" role="content">
+
+        <h2>Rust for embedded systems</h2>
+<p class="meta">13 Nov 2013</p>
+
+<div class="post">
+<p>I&#39;m still looking for a development toolkit I&#39;m happy with for embedded systems. But I&#39;ve stumbled upon <a href="http://www.rust-lang.org/">Rust</a> while looking at the upcoming LinuxConfAU sessions and it looks nice. It is ahead-of-time compiled with LLVM, has a nice type system, lightweight tasks (actor like), and can be used without the runtime/standard library. Rust is still under heavy development, but I was able to set up a build environment to produce ARM Cortex-M0 binaries.</p>
+
+<!--excerpt-->
+
+<h3>Setting up Rust</h3>
+
+<p>To get the basic Rust system going, I followed the <a href="http://static.rust-lang.org/doc/master/tutorial.html#getting-started">installation instructions</a>. Following the lead of <a href="https://github.com/neykov/armboot">Svetoslav Neykov</a>, when building with the <a href="https://launchpad.net/gcc-arm-embedded">gcc-arm-embedded toolchain</a> the process is to use rustc to generate LLVM IR, then use llc to generate ARM thumb assembly, finally using arm-none-eabi-gcc to finish the build. On Ubuntu, I found that I needed a newer LLVM-3.4 than was in the Saucy repos to handle the rustc output, so I added the <a href="http://llvm.org/apt/">llvm.org hosted repositories</a>.</p>
+
+<div class="highlight"><pre><code class="sh">sudo -s
+wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key <span class="p">|</span> apt-key add -
+<span class="nb">echo </span>deb http://llvm.org/apt/saucy/ llvm-toolchain-saucy main &gt; /etc/apt/sources.list.d/llvm-saucy.list
+<span class="nb">echo </span>deb-src http://llvm.org/apt/saucy/ llvm-toolchain-saucy main &gt;&gt; /etc/apt/sources.list.d/llvm-saucy.list
+apt-get update
+apt-get install llvm-3.4 clang-3.4
+<span class="nb">exit</span>
+</code></pre></div>
+
+<p>With this done I could build a project with _start defined in Rust. The flash and RAM use of libc was a bit high, 4K and 2K respectively. To remedy this for small systems, use the -specs=nano.specs flag when linking, this drops flash to 1K and RAM to 100 bytes (depends on what libc functions you are using).</p>
+
+<p>I&#39;m using <a href="https://github.com/thestinger/rust-core">rust-core</a> to help using Rust in a standalone fashion. I needed to add ARM as a platform (at the moment I&#39;ve just aliased it to x86).</p>
+
+<h3>Basic example</h3>
+
+<p>I&#39;ve got a basic project working <a href="https://github.com/bharrisau/rustup/tree/operon">here</a>. Next step is to modify it into a blinky example and check it actually works.</p>
+
+<h3>Future work</h3>
+
+<p>In the near future I want to fix up _start so it has its own section definition. I want to be able to define its location in flash and at the moment it is just generic .data. I&#39;ll also need to tackle the best way to handle the micro-controller registers, Rust doesn&#39;t have great support for &#39;volatile&#39; yet and I&#39;ll need to import the C #defines into Rust macros.</p>
+
+<p><strong>Update:</strong> Got section definitions working by adding -ffunction-sections to the llc options.</p>
+
+</div>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'bharris';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+      </div>
+
+      <!-- End Main Content -->
+
+
+      <!-- Sidebar -->
+
+      <!-- <aside class="large-3 columns">
+
+        <h5>Categories</h5>
+        <ul class="side-nav">
+          <li><a href="#">News</a></li>
+          <li><a href="#">Code</a></li>
+          <li><a href="#">Design</a></li>
+          <li><a href="#">Fun</a></li>
+          <li><a href="#">Weasels</a></li>
+        </ul>
+
+        <div class="panel">
+          <h5>Featured</h5>
+          <p>Pork drumstick turkey fugiat. Tri-tip elit turducken pork chop in. Swine short ribs meatball irure bacon nulla pork belly cupidatat meatloaf cow.</p>
+          <a href="#">Read More &rarr;</a>
+        </div>
+
+      </aside> -->
+
+      <!-- End Sidebar -->
+    </div>
+
+    <!-- End Main Content and Sidebar -->
+
+
+    <!-- Footer -->
+
+    <footer class="row">
+      <div class="large-12 columns">
+        <hr />
+        <div class="row">
+          <div class="large-12 columns">
+            <p>Unless stated otherwise; all works are &copy; Copyright Ben Harris and licenced under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License</a>.</p>
+          </div>
+          <!-- <div class="large-6 columns">
+            <ul class="inline-list right">
+              <li><a href="#">Link 1</a></li>
+              <li><a href="#">Link 2</a></li>
+              <li><a href="#">Link 3</a></li>
+              <li><a href="#">Link 4</a></li>
+            </ul>
+          </div> -->
+        </div>
+      </div>
+    </footer>
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-30655099-1']);
+      _gaq.push(['_setDomainName', 'bharr.is']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <script>
+      document.write('<script src='
+        + ('__proto__' in {} ? '/js/vendor/zepto' :
+          '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min')
+        + '.js><\/script>');
+    </script>
+
+    <script src="/js/foundation/foundation.js"></script>
+    <script src="/js/foundation/foundation.clearing.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+    <script type="text/javascript"
+      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+  </body>
+</html>
+

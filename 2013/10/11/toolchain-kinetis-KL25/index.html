@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Toolchain: Kinetis KL25 development &lt;&lt; bharr</title>
+    
+    <meta name="description" content="Selecting and installing a development environment for Freescale's Kinetis KL25" />
+    
+    
+    <meta name="keywords" content="toolchain,development,kl25,kinetis" />
+    
+    
+    <meta http-equiv="date" content="Friday, 11  2013 00:00:00 GMT" />
+    
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/app.css">
+
+    <script src="/js/vendor/custom.modernizr.js"></script>
+
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+
+  </head>
+  <body>
+
+  <!-- Nav Bar -->
+
+    <div class="row">
+      <div class="large-12 columns">
+        <div class="nav-bar right">
+         <!-- <ul class="button-group">
+           <li><a href="#" class="button">Link 1</a></li>
+           <li><a href="#" class="button">Link 2</a></li>
+           <li><a href="#" class="button">Link 3</a></li>
+           <li><a href="#" class="button">Link 4</a></li>
+          </ul> -->
+        </div>
+        <h1><a href="/">bharr</a> <small>Too new for a tagline.</small></h1>
+        <hr />
+      </div>
+    </div>
+
+    <!-- End Nav -->
+
+
+    <!-- Main Page Content and Sidebar -->
+
+    <div class="row">
+
+      <!-- Main Blog Content -->
+      <div class="large-9 columns" role="content">
+
+        <h2>Toolchain: Kinetis KL25 development</h2>
+<p class="meta">11 Oct 2013</p>
+
+<div class="post">
+<p>I&#39;ve recently selected the Kinetis KL25 as my go-to microcontroller. I can buy it cheaply direct from Freescale, and it has an incredible collection of peripherals for the cost. This necessitated the search for a new toolchain. I have a bad habit of reinventing the wheel with most things, so I started looking for projects with peripheral libraries. After a relatively short search, I had found three potentials.</p>
+
+<p><strong>Update: <a href="/2013/11/01/toolchain-kinetis-KL25-part2/">Part 2</a> of my search</strong></p>
+
+<!--excerpt-->
+
+<h3>Alternatives</h3>
+
+<h4>mbed</h4>
+
+<p><a href="http://mbed.org/">mbed</a> looks to have the biggest ecosystem of the three, and the standard library is designed to make everything very easy. It has a target for the 128kB version of the KL25, which was easy to modify for the 64kB version I&#39;m using (see below). In the end I felt mbed was a bit too heavy, I might come back to it if the other alternatives don&#39;t pan out.</p>
+
+<h4>NuttX</h4>
+
+<p><a href="http://nuttx.org/">NuttX</a> is the choice I&#39;m trying first up. It has the least pretty homepage of the three, but the feature list is strong, and it has a large number of peripheral libraries. Most importantly, it has a porting guide.</p>
+
+<h4>Contiki</h4>
+
+<p><a href="http://www.contiki-os.org/">Contiki</a> has always been a platform that I&#39;ve wanted to use. It is event driven with protothreads, which is how I would like to write my programs. In the end I didn&#39;t choose it because working out how to port it was more effort than NuttX and the library of peripherals looked to be focused for wireless sensor projects.</p>
+
+<p>Clearly this was just from a quick review, I&#39;m probably wrong on a number of points and I might have to come back and try a different project if NuttX doesn&#39;t work out.</p>
+
+<h3>Setting up the NuttX toolchain</h3>
+
+<p>The instructions below are all for Ubuntu 13.04. I&#39;d like to change my development to box to Arch, but, much like going to the dentist, I&#39;m not looking forward to actually doing it.</p>
+
+<h4>Install compilers and dependencies</h4>
+
+<div class="highlight"><pre><code class="sh">sudo add-apt-repository ppa:terry.guo/gcc-arm-embedded
+sudo apt-get update
+sudo apt-get install -y gcc-arm-none-eabi clang gperf libncurses5-dev
+</code></pre></div>
+
+<h4>Prepare NuttX</h4>
+
+<p>I grabbed the NuttX git repo and had a search through. The first thing I had to do was modify the KL2x arch files to include the 64kB chip instead of just the 128kB one. I&#39;ve put these changes in their own <a href="https://github.com/bharrisau/NuttX/tree/MKL25Z64">branch</a>. With the basics out of the way, I created a folder for the board configuration using the freedom-kl25z as a template. As an example, these are the steps for my &#39;operon&#39; config.</p>
+
+<div class="highlight"><pre><code class="sh">git clone -b operon git@github.com:bharrisau/NuttX.git
+<span class="c"># Build mconf if you don&#39;t already have it</span>
+<span class="nb">cd </span>NuttX/misc/tools/kconfig-frontends
+./configure --enable-mconf --disable-gconf --disable-qconf
+make
+sudo make install
+sudo ldconfig
+<span class="nb">cd</span> ../../..
+<span class="c"># Once mconf is built and installed</span>
+<span class="nb">cd </span>nuttx/tools
+./configure operon/default
+<span class="nb">cd</span> ..
+make menuconfig
+<span class="c"># System Type -&gt; Toolchain Selection -&gt; Generic GNU EABI</span>
+<span class="c"># Check through the options, exit and save</span>
+make
+</code></pre></div>
+
+<h4>Next steps</h4>
+
+<p>I need to confirm that the build files are correct. From first inspection, the vector 0 (initial stack pointer) is pointing to the wrong place. It should be the top of the RAM (0x2000 1800) but is at 0x2000 0234. The program counter start is at 0x0411, but I&#39;ve set the start of flash at 0x0410 (there might just be 1 byte of dummy or something).</p>
+
+<p>My target board should be arriving soon, so I&#39;ll have something to test with.</p>
+
+<h3>P.S. building a custom mbed library</h3>
+
+<p>For anyone looking how to modify mbed for a smaller KL25 version, this is what I did.</p>
+
+<p>Update MKL25Z4.ld for 64kB flash/8kB RAM. 1/4 of the RAM is before 0x20000000, and mbed wants me to not use the first 0xC0 of it.</p>
+
+<div class="highlight"><pre><code class="c"><span class="n">MEMORY</span>
+<span class="p">{</span>
+  <span class="n">VECTORS</span> <span class="p">(</span><span class="n">rx</span><span class="p">)</span> <span class="o">:</span> <span class="n">ORIGIN</span> <span class="o">=</span> <span class="mh">0x00000000</span><span class="p">,</span> <span class="n">LENGTH</span> <span class="o">=</span> <span class="mh">0x00000400</span>
+  <span class="n">FLASH_PROTECTION</span>  <span class="p">(</span><span class="n">rx</span><span class="p">)</span> <span class="o">:</span> <span class="n">ORIGIN</span> <span class="o">=</span> <span class="mh">0x00000400</span><span class="p">,</span> <span class="n">LENGTH</span> <span class="o">=</span> <span class="mh">0x00000010</span>
+  <span class="n">FLASH</span> <span class="p">(</span><span class="n">rx</span><span class="p">)</span> <span class="o">:</span> <span class="n">ORIGIN</span> <span class="o">=</span> <span class="mh">0x00000410</span><span class="p">,</span> <span class="n">LENGTH</span> <span class="o">=</span> <span class="mi">64</span><span class="n">K</span> <span class="o">-</span> <span class="mh">0x00000410</span>
+  <span class="n">RAM</span> <span class="p">(</span><span class="n">rwx</span><span class="p">)</span> <span class="o">:</span> <span class="n">ORIGIN</span> <span class="o">=</span> <span class="mh">0x1FFFF8C0</span><span class="p">,</span> <span class="n">LENGTH</span> <span class="o">=</span> <span class="mi">8</span><span class="n">K</span> <span class="o">-</span> <span class="mh">0xC0</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Update system_MKL25Z4.c to use internal system clock.</p>
+
+<div class="highlight"><pre><code class="c"><span class="cp">#define CLOCK_SETUP     0</span>
+</code></pre></div>
+
+<p>Build the library.</p>
+
+<div class="highlight"><pre><code class="sh">python workspace_tools/build.py -m KL25Z -t GCC_ARM
+</code></pre></div>
+
+</div>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'bharris';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+      </div>
+
+      <!-- End Main Content -->
+
+
+      <!-- Sidebar -->
+
+      <!-- <aside class="large-3 columns">
+
+        <h5>Categories</h5>
+        <ul class="side-nav">
+          <li><a href="#">News</a></li>
+          <li><a href="#">Code</a></li>
+          <li><a href="#">Design</a></li>
+          <li><a href="#">Fun</a></li>
+          <li><a href="#">Weasels</a></li>
+        </ul>
+
+        <div class="panel">
+          <h5>Featured</h5>
+          <p>Pork drumstick turkey fugiat. Tri-tip elit turducken pork chop in. Swine short ribs meatball irure bacon nulla pork belly cupidatat meatloaf cow.</p>
+          <a href="#">Read More &rarr;</a>
+        </div>
+
+      </aside> -->
+
+      <!-- End Sidebar -->
+    </div>
+
+    <!-- End Main Content and Sidebar -->
+
+
+    <!-- Footer -->
+
+    <footer class="row">
+      <div class="large-12 columns">
+        <hr />
+        <div class="row">
+          <div class="large-12 columns">
+            <p>Unless stated otherwise; all works are &copy; Copyright Ben Harris and licenced under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License</a>.</p>
+          </div>
+          <!-- <div class="large-6 columns">
+            <ul class="inline-list right">
+              <li><a href="#">Link 1</a></li>
+              <li><a href="#">Link 2</a></li>
+              <li><a href="#">Link 3</a></li>
+              <li><a href="#">Link 4</a></li>
+            </ul>
+          </div> -->
+        </div>
+      </div>
+    </footer>
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-30655099-1']);
+      _gaq.push(['_setDomainName', 'bharr.is']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <script>
+      document.write('<script src='
+        + ('__proto__' in {} ? '/js/vendor/zepto' :
+          '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min')
+        + '.js><\/script>');
+    </script>
+
+    <script src="/js/foundation/foundation.js"></script>
+    <script src="/js/foundation/foundation.clearing.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+    <script type="text/javascript"
+      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+  </body>
+</html>
+

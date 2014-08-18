@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>USB PID/VID: A mitigating solution &lt;&lt; bharr</title>
+    
+    <meta name="description" content="An attempt to mitigate the issue of finding a VID/PID by providing a USB communication spec that covers the majority of OSHW devices." />
+    
+    
+    <meta name="keywords" content="usb,oshw,pid,vid" />
+    
+    
+    <meta http-equiv="date" content="Wednesday, 23  2013 00:00:00 GMT" />
+    
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/app.css">
+
+    <script src="/js/vendor/custom.modernizr.js"></script>
+
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+
+  </head>
+  <body>
+
+  <!-- Nav Bar -->
+
+    <div class="row">
+      <div class="large-12 columns">
+        <div class="nav-bar right">
+         <!-- <ul class="button-group">
+           <li><a href="#" class="button">Link 1</a></li>
+           <li><a href="#" class="button">Link 2</a></li>
+           <li><a href="#" class="button">Link 3</a></li>
+           <li><a href="#" class="button">Link 4</a></li>
+          </ul> -->
+        </div>
+        <h1><a href="/">bharr</a> <small>Too new for a tagline.</small></h1>
+        <hr />
+      </div>
+    </div>
+
+    <!-- End Nav -->
+
+
+    <!-- Main Page Content and Sidebar -->
+
+    <div class="row">
+
+      <!-- Main Blog Content -->
+      <div class="large-9 columns" role="content">
+
+        <h2>USB PID/VID: A mitigating solution</h2>
+<p class="meta">23 Oct 2013</p>
+
+<div class="post">
+<p>There has been <a href="http://www.arachnidlabs.com/blog/2013/10/18/usb-if-no-vid-for-open-source/">recent</a> <a href="http://hackaday.com/2013/10/22/usb-implementers-forum-says-no-to-open-source/">coverage</a> of the difficulty small projects have in getting a PID/VID for their USB devices. Even if they are implementing devices that only use class interfaces (and don&#39;t need a driver), the device still needs a VID/PID to enumerate with. One solution is to try and get USB-IF to sell smaller blocks of numbers, but they are hesitant to do that because the VID/PID isn&#39;t a 32-bit address space they can apportion how they want (this is a political, not technical distinction).</p>
+
+<p>Another solution is to get one VID/PID that all these simple projects can use, and specify a minimal protocol that they need to implement to be compatible with a generic driver. I&#39;ll take the first stab at this, hopefully it gets some traction.</p>
+
+<!--excerpt-->
+
+<p>I previously had some stuff written up here, but it was brought to my attention that DFU and CDC-ACM are sufficiently lightweight and tools already exist for them. So here is the drastically simplified proposal. Two VID/PID pairs are used to cover both a communication class device with a serial port, and a device in firmware update mode. I&#39;ve picked generic names for these devices, &#39;OSHW serial device&#39; and &#39;OSHW firmware mode&#39;, respectively. There is also information for devices that want to provide a firmware update method, but do not need a serial port.</p>
+
+<h4>OSHW serial device</h4>
+
+<p>The VID/PID pair of 0x????/0x???? is available to support these devices. The device is expected to provide a CDC-ACM interface to emulate a serial port. The device MUST comply with the following to use this VID/PID pair:</p>
+
+<ol>
+<li>The device MUST implement CDC-ACM. There are no requirements on the capabilities provided by the interface (i.e. bmCapabilities may be any value allowed by the spec).</li>
+<li>The device descriptor MUST set bDeviceClass, bDeviceSubClass, bDeviceProtocol, and bcdDevice to be 0x02, 0x00, 0x00, and 0x0010, respectively.</li>
+<li>Device descriptor MUST specify manufacturer and product descriptions. The product description MUST be available at least in language 0x0409 (English/US).</li>
+<li>The product description MUST include a URL to a project page for the device. The project page MUST provide documentation of the protocol implemented on the serial port.</li>
+<li>The device MAY provide a DFU interface that complies with the DFU specification.</li>
+</ol>
+
+<h4>OSHW firmware mode</h4>
+
+<p>The VID/PID pair of 0x????/0x???? is available to support these devices. The device MUST comply with the following to use this VID/PID pair:</p>
+
+<ol>
+<li>The device MUST implement the DFU specification.</li>
+<li>The device descriptor MUST set bDeviceClass, bDeviceSubClass, bDeviceProtocol, and bcdDevice to be 0x00, 0x00, 0x00, and 0x0010, respectively.</li>
+<li>Device descriptor MUST specify manufacturer and product descriptions. The product description MUST be available at least in language 0x0409 (English/US).</li>
+<li>The product description MUST include a URL to a project page for the device. The project page MUST provide documentation of the format used for the firmware file.</li>
+<li>The DFU interface descriptor MUST provide a string descriptor. This descriptor MUST be available at least in language 0x0409 (English/US).</li>
+<li>The device MAY provide alternate settings for the DFU interface. If alternative settings are used, all interface string descriptors MUST be unique.</li>
+</ol>
+
+<h4>Devices supporting DFU without CDC-ACM</h4>
+
+<p>The same VID/PID pair used for &#39;OSHW firmware mode&#39; may be used for these devices. The device should look identical to an &#39;OSHW firmware mode&#39; device except the interface descriptor should reflect the run-time mode. When in run mode, the device MUST comply with the following to use this VID/PID pair:</p>
+
+<ol>
+<li>The device MUST implement the DFU specification for run-mode with the exception that the device descriptor and configuration descriptor MUST be implemented from the DFU mode specification.</li>
+<li>The device descriptor MUST set bDeviceClass, bDeviceSubClass, bDeviceProtocol, and bcdDevice to be 0x00, 0x00, 0x00, and 0x0010, respectively.</li>
+</ol>
+
+<h4>Definitions</h4>
+
+<p>DFU: <a href="http://www.usb.org/developers/devclass_docs/DFU_1.1.pdf">USB Device Firmware Upgrade Specification</a>.<br>
+CDC: <a href="http://www.usb.org/developers/devclass_docs/CDC1.2_WMC1.1_012011.zip">USD Communications Device Class</a> (see CDC120.pdf).<br>
+ACM: <a href="http://www.usb.org/developers/devclass_docs/CDC1.2_WMC1.1_012011.zip">Abstract Control Model</a> (see PSTN120.pdf).</p>
+
+</div>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'bharris';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+      </div>
+
+      <!-- End Main Content -->
+
+
+      <!-- Sidebar -->
+
+      <!-- <aside class="large-3 columns">
+
+        <h5>Categories</h5>
+        <ul class="side-nav">
+          <li><a href="#">News</a></li>
+          <li><a href="#">Code</a></li>
+          <li><a href="#">Design</a></li>
+          <li><a href="#">Fun</a></li>
+          <li><a href="#">Weasels</a></li>
+        </ul>
+
+        <div class="panel">
+          <h5>Featured</h5>
+          <p>Pork drumstick turkey fugiat. Tri-tip elit turducken pork chop in. Swine short ribs meatball irure bacon nulla pork belly cupidatat meatloaf cow.</p>
+          <a href="#">Read More &rarr;</a>
+        </div>
+
+      </aside> -->
+
+      <!-- End Sidebar -->
+    </div>
+
+    <!-- End Main Content and Sidebar -->
+
+
+    <!-- Footer -->
+
+    <footer class="row">
+      <div class="large-12 columns">
+        <hr />
+        <div class="row">
+          <div class="large-12 columns">
+            <p>Unless stated otherwise; all works are &copy; Copyright Ben Harris and licenced under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License</a>.</p>
+          </div>
+          <!-- <div class="large-6 columns">
+            <ul class="inline-list right">
+              <li><a href="#">Link 1</a></li>
+              <li><a href="#">Link 2</a></li>
+              <li><a href="#">Link 3</a></li>
+              <li><a href="#">Link 4</a></li>
+            </ul>
+          </div> -->
+        </div>
+      </div>
+    </footer>
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-30655099-1']);
+      _gaq.push(['_setDomainName', 'bharr.is']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <script>
+      document.write('<script src='
+        + ('__proto__' in {} ? '/js/vendor/zepto' :
+          '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min')
+        + '.js><\/script>');
+    </script>
+
+    <script src="/js/foundation/foundation.js"></script>
+    <script src="/js/foundation/foundation.clearing.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+    <script type="text/javascript"
+      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+  </body>
+</html>
+

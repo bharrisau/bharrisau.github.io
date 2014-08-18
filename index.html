@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>bharr</title>
+    
+    <meta name="description" content="Life and work" />
+    
+    
+    <meta name="keywords" content="technology,mathematics,science,electronics,programming" />
+    
+    
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/app.css">
+
+    <script src="/js/vendor/custom.modernizr.js"></script>
+
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+
+  </head>
+  <body>
+
+  <!-- Nav Bar -->
+
+    <div class="row">
+      <div class="large-12 columns">
+        <div class="nav-bar right">
+         <!-- <ul class="button-group">
+           <li><a href="#" class="button">Link 1</a></li>
+           <li><a href="#" class="button">Link 2</a></li>
+           <li><a href="#" class="button">Link 3</a></li>
+           <li><a href="#" class="button">Link 4</a></li>
+          </ul> -->
+        </div>
+        <h1><a href="/">bharr</a> <small>Too new for a tagline.</small></h1>
+        <hr />
+      </div>
+    </div>
+
+    <!-- End Nav -->
+
+
+    <!-- Main Page Content and Sidebar -->
+
+    <div class="row">
+
+      <!-- Main Blog Content -->
+      <div class="large-9 columns" role="content">
+
+        
+  <article>
+
+    <h3><a href="/2013/11/13/rust-for-embedded-systems/">Rust for embedded systems</a></h3>
+    <h6>Written by Ben Harris on 13 Nov 2013.</h6>
+
+    <p>I&#39;m still looking for a development toolkit I&#39;m happy with for embedded systems. But I&#39;ve stumbled upon <a href="http://www.rust-lang.org/">Rust</a> while looking at the upcoming LinuxConfAU sessions and it looks nice. It is ahead-of-time compiled with LLVM, has a nice type system, lightweight tasks (actor like), and can be used without the runtime/standard library. Rust is still under heavy development, but I was able to set up a build environment to produce ARM Cortex-M0 binaries.</p>
+
+
+  </article>
+
+  <article>
+
+    <h3><a href="/2013/11/01/toolchain-kinetis-KL25-part2/">Toolchain: Kinetis KL25 development - Part 2</a></h3>
+    <h6>Written by Ben Harris on 01 Nov 2013.</h6>
+
+    <p>After heaps of messing about, I have a basic toolchain for the KL25 (and hopefully any Kinetis series chip). I couldn&#39;t find out the licence for the very hard to find Freescale headers, so I&#39;ve set up Github repositories to hold the BSD licensed <a href="https://github.com/bharrisau/CMSIS">ARM CMSIS Headers</a> and my own BSD licensed <a href="https://github.com/bharrisau/cmsis-freescale">Kinetis CMSIS headers</a>. My own project, Operon, has an <a href="https://github.com/bharrisau/operon/tree/master/firmware">example</a> of how the two repositories are used. I&#39;ve utilised Simon Schubert&#39;s <a href="https://github.com/mchck/mchck">SWD interface</a> for programming and debugging.</p>
+
+
+  </article>
+
+  <article>
+
+    <h3><a href="/2013/10/24/mnemonic-project-day-5/">Mnemonic project: Day 5</a></h3>
+    <h6>Written by Ben Harris on 24 Oct 2013.</h6>
+
+    <p>I&#39;m practising the skill of memorising a deck of cards. Hopefully by logging my progress I&#39;ll keep at it long enough to make it a habit.</p>
+
+<p><strong>Result 6:</strong> Stored 52 cards in 11 minutes. Recalled 85%. </p>
+
+
+  </article>
+
+  <article>
+
+    <h3><a href="/2013/10/23/usb-vid-pid-solution/">USB PID/VID: A mitigating solution</a></h3>
+    <h6>Written by Ben Harris on 23 Oct 2013.</h6>
+
+    <p>There has been <a href="http://www.arachnidlabs.com/blog/2013/10/18/usb-if-no-vid-for-open-source/">recent</a> <a href="http://hackaday.com/2013/10/22/usb-implementers-forum-says-no-to-open-source/">coverage</a> of the difficulty small projects have in getting a PID/VID for their USB devices. Even if they are implementing devices that only use class interfaces (and don&#39;t need a driver), the device still needs a VID/PID to enumerate with. One solution is to try and get USB-IF to sell smaller blocks of numbers, but they are hesitant to do that because the VID/PID isn&#39;t a 32-bit address space they can apportion how they want (this is a political, not technical distinction).</p>
+
+<p>Another solution is to get one VID/PID that all these simple projects can use, and specify a minimal protocol that they need to implement to be compatible with a generic driver. I&#39;ll take the first stab at this, hopefully it gets some traction.</p>
+
+
+  </article>
+
+  <article>
+
+    <h3><a href="/2013/10/22/mnemonic-project-day-4/">Mnemonic project: Day 4</a></h3>
+    <h6>Written by Ben Harris on 22 Oct 2013.</h6>
+
+    <p>I&#39;m practising the skill of memorising a deck of cards. Hopefully by logging my progress I&#39;ll keep at it long enough to make it a habit.</p>
+
+<p><strong>Result 5:</strong> Stored 44 cards in 10 minutes. Recalled 82%. </p>
+
+
+  </article>
+
+  <article>
+
+    <h3><a href="/2013/10/21/swd-buffer-busblaster/">SWD buffer for BusBlaster v3</a></h3>
+    <h6>Written by Ben Harris on 21 Oct 2013.</h6>
+
+    <p>I put together a quick project to make a KT-Link compatible buffer for my <a href="http://dangerousprototypes.com/docs/Mathieu_:_Bus_Blaster_v3">BusBlaster v3</a>. The repo is <a href="https://github.com/bharrisau/busblaster">here</a>, and background and programming instructions is available <a href="http://dangerousprototypes.com/docs/Bus_Blaster_buffer_logic">here</a>.</p>
+
+<p>Next step is finding a urJtag or OpenOCD version that supports KT-Link SWD.</p>
+
+
+  </article>
+
+  <article>
+
+    <h3><a href="/2013/10/21/mnemonic-project-day-3/">Mnemonic project: Day 3</a></h3>
+    <h6>Written by Ben Harris on 21 Oct 2013.</h6>
+
+    <p>I&#39;m practising the skill of memorising a deck of cards. Hopefully by logging my progress I&#39;ll keep at it long enough to make it a habit.</p>
+
+<p><strong>Result 4:</strong> Stored 38 cards in 10 minutes. Recalled 100%. </p>
+
+
+  </article>
+
+  <article>
+
+    <h3><a href="/2013/10/21/laser-cutting-aluminium-vs-steel/">Laser cutting aluminium vs steel</a></h3>
+    <h6>Written by Ben Harris on 21 Oct 2013.</h6>
+
+    <p>I like to have rough figures for how common things stack up against each other. I&#39;m designing some laser cut pieces for a 3D printer I&#39;m working on, and I have to choose between aluminium and carbon steel. the long and short of it is, when comparing 3mm aluminium to 2mm carbon steel; the aluminium weight half, costs twice as much and is marginally stiffer (~15% more resistant to deflection/bending).</p>
+
+
+  </article>
+
+  <article>
+
+    <h3><a href="/2013/10/20/mnemonic-project-part-2/">Mnemonic project: Day 2</a></h3>
+    <h6>Written by Ben Harris on 20 Oct 2013.</h6>
+
+    <p>I&#39;m practising the skill of memorising a deck of cards. Hopefully by logging my progress I&#39;ll keep at it long enough to make it a habit.</p>
+
+<p><strong>Result 3:</strong> Stored 36 cards in 10 minutes. Recalled 78%. </p>
+
+
+  </article>
+
+  <article>
+
+    <h3><a href="/2013/10/19/mnemonic-project-part-1/">Mnemonic project: Day 1</a></h3>
+    <h6>Written by Ben Harris on 19 Oct 2013.</h6>
+
+    <p>I&#39;m practising the skill of memorising a deck of cards. Hopefully by logging my progress I&#39;ll keep at it long enough to make it a habit.</p>
+
+<p><strong>Result 1:</strong> Stored 20 cards in 10 minutes. Recalled 100%.<br>
+<strong>Result 2:</strong> Stored 40 cards in 10 minutes. Recalled 50%.</p>
+
+
+  </article>
+
+  <article>
+
+    <h3><a href="/2013/10/11/toolchain-kinetis-KL25/">Toolchain: Kinetis KL25 development</a></h3>
+    <h6>Written by Ben Harris on 11 Oct 2013.</h6>
+
+    <p>I&#39;ve recently selected the Kinetis KL25 as my go-to microcontroller. I can buy it cheaply direct from Freescale, and it has an incredible collection of peripherals for the cost. This necessitated the search for a new toolchain. I have a bad habit of reinventing the wheel with most things, so I started looking for projects with peripheral libraries. After a relatively short search, I had found three potentials.</p>
+
+<p><strong>Update: <a href="/2013/11/01/toolchain-kinetis-KL25-part2/">Part 2</a> of my search</strong></p>
+
+
+  </article>
+
+  <article>
+
+    <h3><a href="/2013/10/11/magnetic-delta-angles/">Magnetic delta and print angles</a></h3>
+    <h6>Written by Ben Harris on 11 Oct 2013.</h6>
+
+    <p>I&#39;m in the middle of designing my delta style 3D printer. Having reviewed a few designs, the magnetic joints looks to be the easiest way to go. I&#39;ve noticed that many people angle the ball mount 45 degrees by either <a href="http://www.youtube.com/watch?v=WriyoSTJ51s">bending the plate</a> or <a href="http://forum.seemecnc.com/viewtopic.php?f=54&amp;t=1704&amp;sid=512048173d7806425ee0b8a411e75957">inserting an angle spacer</a>. I wanted to avoid this if possible, so I calculated the minimum inclination possible for a given design.</p>
+
+
+  </article>
+
+
+      </div>
+
+      <!-- End Main Content -->
+
+
+      <!-- Sidebar -->
+
+      <!-- <aside class="large-3 columns">
+
+        <h5>Categories</h5>
+        <ul class="side-nav">
+          <li><a href="#">News</a></li>
+          <li><a href="#">Code</a></li>
+          <li><a href="#">Design</a></li>
+          <li><a href="#">Fun</a></li>
+          <li><a href="#">Weasels</a></li>
+        </ul>
+
+        <div class="panel">
+          <h5>Featured</h5>
+          <p>Pork drumstick turkey fugiat. Tri-tip elit turducken pork chop in. Swine short ribs meatball irure bacon nulla pork belly cupidatat meatloaf cow.</p>
+          <a href="#">Read More &rarr;</a>
+        </div>
+
+      </aside> -->
+
+      <!-- End Sidebar -->
+    </div>
+
+    <!-- End Main Content and Sidebar -->
+
+
+    <!-- Footer -->
+
+    <footer class="row">
+      <div class="large-12 columns">
+        <hr />
+        <div class="row">
+          <div class="large-12 columns">
+            <p>Unless stated otherwise; all works are &copy; Copyright Ben Harris and licenced under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License</a>.</p>
+          </div>
+          <!-- <div class="large-6 columns">
+            <ul class="inline-list right">
+              <li><a href="#">Link 1</a></li>
+              <li><a href="#">Link 2</a></li>
+              <li><a href="#">Link 3</a></li>
+              <li><a href="#">Link 4</a></li>
+            </ul>
+          </div> -->
+        </div>
+      </div>
+    </footer>
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-30655099-1']);
+      _gaq.push(['_setDomainName', 'bharr.is']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <script>
+      document.write('<script src='
+        + ('__proto__' in {} ? '/js/vendor/zepto' :
+          '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min')
+        + '.js><\/script>');
+    </script>
+
+    <script src="/js/foundation/foundation.js"></script>
+    <script src="/js/foundation/foundation.clearing.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+    <script type="text/javascript"
+      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+  </body>
+</html>
+
