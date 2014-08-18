@@ -1,12 +1,13 @@
+destination: ./_site
+username: bharrisau
+branch: source
+
 name: bharr
 markdown: redcarpet
 pygments: true
-exclude: ['Rakefile', 'config.rb', '.gitignore', '.sass-cache', 'sass']
+exclude: ['Rakefile', '.gitignore', '.sass-cache', 'Gemfile', 'Gemfile.lock', 'vendor']
 permalink: /:year/:month/:day/:title/
 ga: UA-30655099-1
 excerpt_separator: <!--excerpt-->
-description: Life and work
+description: "Life and work"
 keywords: ['technology', 'mathematics', 'science', 'electronics', 'programming']
-
-redcarpet:
-  extensions: ['tables']
