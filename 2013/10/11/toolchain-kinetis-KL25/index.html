@@ -86,15 +86,16 @@
 
 <h4>Install compilers and dependencies</h4>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">sudo add-apt-repository ppa:terry.guo/gcc-arm-embedded
+<div class="highlight"><pre><code class="sh">sudo add-apt-repository ppa:terry.guo/gcc-arm-embedded
 sudo apt-get update
-sudo apt-get install -y gcc-arm-none-eabi clang gperf libncurses5-dev</code></pre></div>
+sudo apt-get install -y gcc-arm-none-eabi clang gperf libncurses5-dev
+</code></pre></div>
 
 <h4>Prepare NuttX</h4>
 
 <p>I grabbed the NuttX git repo and had a search through. The first thing I had to do was modify the KL2x arch files to include the 64kB chip instead of just the 128kB one. I&#39;ve put these changes in their own <a href="https://github.com/bharrisau/NuttX/tree/MKL25Z64">branch</a>. With the basics out of the way, I created a folder for the board configuration using the freedom-kl25z as a template. As an example, these are the steps for my &#39;operon&#39; config.</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">git clone -b operon git@github.com:bharrisau/NuttX.git
+<div class="highlight"><pre><code class="sh">git clone -b operon git@github.com:bharrisau/NuttX.git
 <span class="c"># Build mconf if you don&#39;t already have it</span>
 <span class="nb">cd </span>NuttX/misc/tools/kconfig-frontends
 ./configure --enable-mconf --disable-gconf --disable-qconf
@@ -109,7 +110,8 @@ sudo ldconfig
 make menuconfig
 <span class="c"># System Type -&gt; Toolchain Selection -&gt; Generic GNU EABI</span>
 <span class="c"># Check through the options, exit and save</span>
-make</code></pre></div>
+make
+</code></pre></div>
 
 <h4>Next steps</h4>
 
@@ -123,21 +125,24 @@ make</code></pre></div>
 
 <p>Update MKL25Z4.ld for 64kB flash/8kB RAM. 1/4 of the RAM is before 0x20000000, and mbed wants me to not use the first 0xC0 of it.</p>
 
-<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">MEMORY</span>
+<div class="highlight"><pre><code class="c"><span class="n">MEMORY</span>
 <span class="p">{</span>
   <span class="n">VECTORS</span> <span class="p">(</span><span class="n">rx</span><span class="p">)</span> <span class="o">:</span> <span class="n">ORIGIN</span> <span class="o">=</span> <span class="mh">0x00000000</span><span class="p">,</span> <span class="n">LENGTH</span> <span class="o">=</span> <span class="mh">0x00000400</span>
   <span class="n">FLASH_PROTECTION</span>  <span class="p">(</span><span class="n">rx</span><span class="p">)</span> <span class="o">:</span> <span class="n">ORIGIN</span> <span class="o">=</span> <span class="mh">0x00000400</span><span class="p">,</span> <span class="n">LENGTH</span> <span class="o">=</span> <span class="mh">0x00000010</span>
   <span class="n">FLASH</span> <span class="p">(</span><span class="n">rx</span><span class="p">)</span> <span class="o">:</span> <span class="n">ORIGIN</span> <span class="o">=</span> <span class="mh">0x00000410</span><span class="p">,</span> <span class="n">LENGTH</span> <span class="o">=</span> <span class="mi">64</span><span class="n">K</span> <span class="o">-</span> <span class="mh">0x00000410</span>
   <span class="n">RAM</span> <span class="p">(</span><span class="n">rwx</span><span class="p">)</span> <span class="o">:</span> <span class="n">ORIGIN</span> <span class="o">=</span> <span class="mh">0x1FFFF8C0</span><span class="p">,</span> <span class="n">LENGTH</span> <span class="o">=</span> <span class="mi">8</span><span class="n">K</span> <span class="o">-</span> <span class="mh">0xC0</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span>
+</code></pre></div>
 
 <p>Update system_MKL25Z4.c to use internal system clock.</p>
 
-<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#define CLOCK_SETUP     0</span></code></pre></div>
+<div class="highlight"><pre><code class="c"><span class="cp">#define CLOCK_SETUP     0</span>
+</code></pre></div>
 
 <p>Build the library.</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">python workspace_tools/build.py -m KL25Z -t GCC_ARM</code></pre></div>
+<div class="highlight"><pre><code class="sh">python workspace_tools/build.py -m KL25Z -t GCC_ARM
+</code></pre></div>
 
 </div>
 
