@@ -4,7 +4,7 @@ branch: source
 
 name: bharr
 markdown: redcarpet
-pygments: true
+highlighter: pygments
 exclude: ['Rakefile', 'Gemfile', 'Gemfile.lock', 'vendor']
 include: ['.travis.yml']
 permalink: /:year/:month/:day/:title/
