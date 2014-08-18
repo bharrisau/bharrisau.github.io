@@ -5,7 +5,8 @@ branch: source
 name: bharr
 markdown: redcarpet
 pygments: true
-exclude: ['Rakefile', '.gitignore', '.sass-cache', 'Gemfile', 'Gemfile.lock', 'vendor']
+exclude: ['Rakefile', 'Gemfile', 'Gemfile.lock', 'vendor']
+include: ['.travis.yml']
 permalink: /:year/:month/:day/:title/
 ga: UA-30655099-1
 excerpt_separator: <!--excerpt-->
