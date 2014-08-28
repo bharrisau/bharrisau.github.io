@@ -55,6 +55,22 @@
         
   <article>
 
+    <h3><a href="/2014/08/28/simple-laptop-backup-system/">Simple laptop backup system</a></h3>
+    <h6>Written by Ben Harris on 28 Aug 2014.</h6>
+
+    <p>Just a quick post to help me get back in the habit of writing. This is on my laptop backup process; I frequently need to travel, and I feel better knowing that all my half-comitted git repositories are safe.</p>
+
+<p>I am using the <a href="http://chrispoole.com/project/horcrux/">horcrux</a> tool to run my backups. This makes the backup as simple as</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">sudo mount /mnt/usb_hdd
+horcrux auto usb_hdd
+</code></pre></div>
+<p>In addition to this, I have a daily cron job that checks the date of the horcrux log and emails me if it is older than 5 days. In this way I get reminded to update my backup every 5 days.</p>
+
+
+  </article>
+
+  <article>
+
     <h3><a href="/2014/08/18/revised-blog-infrastructure/">Revised blog infrastructure</a></h3>
     <h6>Written by Ben Harris on 18 Aug 2014.</h6>
 
