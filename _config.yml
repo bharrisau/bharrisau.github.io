@@ -12,3 +12,31 @@ ga: UA-30655099-1
 excerpt_separator: <!--excerpt-->
 description: "Life and work"
 keywords: ['technology', 'mathematics', 'science', 'electronics', 'programming']
+prose:
+  rooturl: '_posts'
+  siteurl: 'http://bharr.is'
+  media: 'media'
+  metadata:
+    _posts:
+      - name: "layout"
+        field:
+          element: "hidden"
+          value: "post"
+      - name: "title"
+        field:
+          element: "text"
+          label: "Post title"
+      - name: "description"
+        field:
+          element: "text"
+          label: "Post description"
+      - name: "categories"
+        field:
+          element: "multiselect"
+          label: "Add Tags"
+          placeholder: "Choose Tags"
+          options:
+            - name: "Rust"
+              value: "rust"
+            - name: "Embedded"
+              value: "embedded"
