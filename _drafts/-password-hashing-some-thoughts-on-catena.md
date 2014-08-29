@@ -5,7 +5,6 @@ title: "Password hashing: Some thoughts on Catena"
 description: Exploring some ideas around extending the basic Catena password hashing framework.
 ---
 
-
 ### Lambda cyclical bit reversal
 Problem that bit-reversal is cyclical after two passes. Ideally want a lambda-cyclical transform, that still results in nodes close in layer N being far away in layer N-1 (but also in layer N-1 to 0). Cyclical in lambda means that layer 0 and the final layer are identical, but layer 0 is easily computed anyway so this is not a significant weakness. The advantage is that the first and last passes are sequential.
 
@@ -25,3 +24,6 @@ The least significant bit moves up to the 1/4 most significant bit. For a garlic
 
 ### Potential to multicore the inner passes
 Want mixing between threads, so the nodes that thread X computes in layer N must depend on nodes computed by all other threads in layer N-1.
+
+### Demo implementation
+I'm currently working on a small application for long term key generation using these ideas. The API is simple; one command to create a text file with a 128-bit salt, a password hint and the Catena variables, and a second command to take the above file and generate the output on stdout.
